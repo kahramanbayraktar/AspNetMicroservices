@@ -6,7 +6,7 @@ using System.Net;
 namespace Basket.API.Controllers
 {
     [ApiController]
-    [Route("api/v1[controller]")]
+    [Route("api/v1/[controller]")]
     public class BasketController : ControllerBase
     {
         private readonly IBasketRepository _basketRepository;
@@ -17,7 +17,7 @@ namespace Basket.API.Controllers
         }
 
         [ProducesResponseType(typeof(ShoppingCart), (int)HttpStatusCode.OK)]
-        [HttpGet("{userName}", Name = "GetBasket")]
+        [HttpGet("{userName}", Name = "GetBasket")] // This use make the method work in this form: /basket/someusername
         public async Task<ActionResult<ShoppingCart>> GetBasket(string userName)
         {
             var basket = await _basketRepository.GetBasket(userName);
@@ -32,7 +32,7 @@ namespace Basket.API.Controllers
         }
 
         [ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
-        [HttpDelete]
+        [HttpDelete("{userName}")]
         public async Task<ActionResult> DeleteBasket(string userName)
         {
             await _basketRepository.DeleteBasket(userName);
