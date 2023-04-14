@@ -1,4 +1,5 @@
 
+using Discount.API.Extensions;
 using Discount.API.Repositories;
 
 namespace Discount.API
@@ -20,6 +21,9 @@ namespace Discount.API
 
             var app = builder.Build();
 
+            // For PostgreSQL
+            app.MigrateDatabase<Program>(0);
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -28,7 +32,6 @@ namespace Discount.API
             }
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
