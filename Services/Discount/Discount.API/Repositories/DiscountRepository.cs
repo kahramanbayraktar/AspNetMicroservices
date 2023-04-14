@@ -57,7 +57,7 @@ namespace Discount.API.Repositories
         {
             using var connection = new NpgsqlConnection(_configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
 
-            var affected = await connection.ExecuteAsync("DELETE Coupon WHERE ProductName = @ProductName",
+            var affected = await connection.ExecuteAsync("DELETE FROM Coupon WHERE ProductName = @ProductName",
                 new
                 {
                     ProductName = productName

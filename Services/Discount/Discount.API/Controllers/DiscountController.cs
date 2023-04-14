@@ -17,7 +17,7 @@ namespace Discount.API.Controllers
         }
 
         [ProducesResponseType(typeof(Coupon), (int)HttpStatusCode.OK)]
-        [HttpGet("{productName}")]
+        [HttpGet("{productName}", Name = "GetDiscount")]
         public async Task<ActionResult<Coupon>> GetDiscount(string productName)
         {
             return await _repository.GetDiscount(productName);
@@ -29,7 +29,7 @@ namespace Discount.API.Controllers
         {
             await _repository.CreateDiscount(coupon);
             // TODO: return value check missing
-            return CreatedAtRoute(nameof(GetDiscount), new Coupon { ProductName = coupon.ProductName }); // TODO: magic strings
+            return CreatedAtRoute("GetDiscount", new Coupon { ProductName = coupon.ProductName }, coupon); // TODO: magic strings
         }
 
         [ProducesResponseType(typeof(Coupon), (int)HttpStatusCode.OK)]
