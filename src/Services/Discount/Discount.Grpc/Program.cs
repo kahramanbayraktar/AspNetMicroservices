@@ -1,3 +1,5 @@
+using Discount.Grpc.Extensions;
+using Discount.Grpc.Repositories;
 using Discount.Grpc.Services;
 
 namespace Discount.Grpc
@@ -12,12 +14,17 @@ namespace Discount.Grpc
             // For instructions on how to configure Kestrel and gRPC clients on macOS, visit https://go.microsoft.com/fwlink/?linkid=2099682
 
             // Add services to the container.
+            builder.Services.AddScoped<IDiscountRepository, DiscountRepository>();
             builder.Services.AddGrpc();
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             var app = builder.Build();
 
+            // For PostgreSQL
+            app.MigrateDatabase<Program>(0);
+
             // Configure the HTTP request pipeline.
-            app.MapGrpcService<GreeterService>();
+            app.MapGrpcService<DiscountService>();
             app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 
             app.Run();
