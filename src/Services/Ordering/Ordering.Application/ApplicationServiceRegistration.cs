@@ -1,9 +1,10 @@
 ﻿using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using Ordering.Application.Behaviors;
 using System.Reflection;
 
-namespace Ordering.API
+namespace Ordering.Application
 {
     public static class ApplicationServiceRegistration
     {
