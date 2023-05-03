@@ -1,5 +1,7 @@
+using Ordering.API.Extensions;
 using Ordering.Application;
 using Ordering.Infrastructure;
+using Ordering.Infrastructure.Persistence;
 
 namespace Ordering.API
 {
@@ -20,6 +22,15 @@ namespace Ordering.API
 
             var app = builder.Build();
 
+            // For SQL Server
+            app.MigrateDatabase<OrderContext>((context, services) =>
+            {
+                // This code block is represented by the "seeder" parameter of the "MigrateDatabase" method.
+                var logger = services.GetService<ILogger<OrderContextSeed>>();
+                OrderContextSeed.SeedAsync(context, logger!).Wait();
+            });
+            //app.MigrateDatabase<OrderContext>(Seed, 0);
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -34,5 +45,11 @@ namespace Ordering.API
 
             app.Run();
         }
+
+        //private static void Seed(OrderContext context, IServiceProvider services)
+        //{
+        //    var logger = services.GetService<ILogger<OrderContextSeed>>();
+        //    OrderContextSeed.SeedAsync(context, logger!).Wait();
+        //}
     }
 }
