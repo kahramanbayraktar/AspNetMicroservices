@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using Ordering.Application.Contracts.Persistence;
 using Ordering.Application.Exceptions;
-using Ordering.Application.Features.Orders.Commands.UpdateOrder;
 using Ordering.Domain.Entities;
 
 namespace Ordering.Application.Features.Orders.Commands.DeleteOrder
@@ -10,7 +9,7 @@ namespace Ordering.Application.Features.Orders.Commands.DeleteOrder
     public class DeleteOrderCommandHandler : IRequestHandler<DeleteOrderCommand>
     {
         private readonly IOrderRepository _orderRepository;
-        private readonly ILogger _logger;
+        private readonly ILogger<DeleteOrderCommandHandler> _logger;
 
         public DeleteOrderCommandHandler(IOrderRepository orderRepository, ILogger<DeleteOrderCommandHandler> logger)
         {
