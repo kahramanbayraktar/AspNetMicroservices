@@ -30,7 +30,7 @@ services:
   orderdb:
     container_name: orderdb
     environment:
-        MSSQL_SA_PASSWORD: "SwN12345678"
+        MSSQL_SA_PASSWORD: "12345678"
         ACCEPT_EULA: "Y"
     restart: always
     ports:
