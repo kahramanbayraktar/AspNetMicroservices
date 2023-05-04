@@ -8,7 +8,7 @@ namespace Ordering.Application.Features.Orders.Commands.UpdateOrder
         public DeleteOrderCommandValidator()
         {
             RuleFor(p => p.Id)
-               .LessThanOrEqualTo(0).WithMessage("{Id} must be a positive number.");
+               .GreaterThanOrEqualTo(0).WithMessage("{Id} must be a positive number.");
         }
     }
 }

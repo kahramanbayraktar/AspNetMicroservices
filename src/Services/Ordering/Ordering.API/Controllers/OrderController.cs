@@ -27,7 +27,7 @@ namespace Ordering.API.Controllers
             return Ok(orders);
         }
 
-        // This method is for test purposes only. Acyual call will be done from RabbitMQ.
+        // This method is for test purposes only. Actual call will be done from RabbitMQ.
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPost(Name = "CheckoutOrder")]
         public async Task<ActionResult<int>> CheckoutOrder([FromBody] CheckoutOrderCommand command)

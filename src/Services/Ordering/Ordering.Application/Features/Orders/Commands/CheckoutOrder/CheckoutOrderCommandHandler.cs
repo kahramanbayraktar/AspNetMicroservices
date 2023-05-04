@@ -29,7 +29,7 @@ namespace Ordering.Application.Features.Orders.Commands.CheckoutOrder
 
             var newOrder = await _orderRepository.AddAsync(orderEntity);
 
-            _logger.LogInformation($"Order {newOrder} has been created.");
+            _logger.LogInformation($"Order {newOrder.Id} has been created.");
 
             await SendEmail(newOrder);
 

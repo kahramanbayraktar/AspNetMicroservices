@@ -5,9 +5,9 @@ namespace Ordering.Application.Behaviors
 {
     public class UnhandledExceptionBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<TRequest> _logger;
 
-        public UnhandledExceptionBehavior(ILogger logger)
+        public UnhandledExceptionBehavior(ILogger<TRequest> logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
