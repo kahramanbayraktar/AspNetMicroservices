@@ -1,5 +1,6 @@
 using Basket.API.GrpcServices;
 using Basket.API.Repositories;
+using MassTransit;
 using static Discount.Grpc.Protos.DiscountProtoService;
 
 namespace Basket.API
@@ -12,19 +13,31 @@ namespace Basket.API
 
             // Add services to the container.
 
+            // Redis
             builder.Services.AddStackExchangeRedisCache(options =>
                 options.Configuration = builder.Configuration["CacheSettings:ConnectionString"]);
 
             builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+            builder.Services.AddAutoMapper(typeof(Program));
 
+            // GRPC
             builder.Services.AddGrpcClient<DiscountProtoServiceClient>(options =>
                 options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!));
             builder.Services.AddScoped<DiscountGrpcService>();
 
+            // RabbitMQ
+            builder.Services.AddMassTransit(config =>
+            {
+                config.UsingRabbitMq((ctx, cfg) =>
+                {
+                    cfg.Host(builder.Configuration["EventBusSettings:HostAddress"]);
+                });
+            });
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen();            
 
             var app = builder.Build();
 
