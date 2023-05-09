@@ -17,6 +17,7 @@ namespace Basket.API
             builder.Services.AddStackExchangeRedisCache(options =>
                 options.Configuration = builder.Configuration["CacheSettings:ConnectionString"]);
 
+            // Common
             builder.Services.AddScoped<IBasketRepository, BasketRepository>();
             builder.Services.AddAutoMapper(typeof(Program));
 
